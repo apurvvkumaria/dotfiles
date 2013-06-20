@@ -1,0 +1,10 @@
+#!/bin/sh
+
+files_to_be_commited=$(git diff --name-only --cached | grep ".*\.py$" | xargs pep8) 
+if [[ $files_to_be_commited =~ .*E[0-9]+.* ]]
+then
+    echo "PEP8 Errors..."
+    git diff --name-only --cached | grep ".*\.py$" | xargs pep8    
+    echo "Aborting commit..."
+    exit 1
+fi
